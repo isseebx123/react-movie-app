@@ -6,7 +6,7 @@ class Movie extends Component{
     return (
       <div>
         <MoviePoster />
-        <h1>hello this is a movie</h1>
+        <h1>hello this is a movie, and ssh test</h1>
       </div>
     )
   }
