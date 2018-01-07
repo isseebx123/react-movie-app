@@ -3,10 +3,11 @@ import './Movie.css';
 
 class Movie extends Component{
   render(){ // 컴포넌트는 항상 렌더링을 해야함을 명시해라
-    return (
+    console.log(this.props); // props를 통해 부모가 자식에게 데이터를 전달
+    return ( // JSX명령어는 {}괄호를 붙여야한다.
       <div>
-        <MoviePoster />
-        <h1>hello this is a movie, and ssh test2</h1>
+        <MoviePoster poster={this.props.poster}/>
+        <h1>{this.props.title}</h1>
       </div>
     )
   }
@@ -15,7 +16,7 @@ class Movie extends Component{
 class MoviePoster extends Component{
   render(){
     return(
-      <img src="https://is2-ssl.mzstatic.com/image/thumb/Music1/v4/ac/08/3d/ac083d70-0149-0a0a-4b90-7647203edbe0/UMG_cvrart_00602547178466_01_RGB72_1500x1500_14UMGIM51157.jpg/1200x630bb.jpg" />
+      <img alt="moiveImg" src={this.props.poster} />
     )
   }
 }
