@@ -27,8 +27,8 @@ class App extends Component {
   render() { // 모든 컴포넌트는 render()를 가짐, 이 컴포넌트가 보여주는게 무엇인가를 의미.
     return ( // prop 임의의 이름으로 지정가능 한듯.
       <div className="App">
-        {movies.map(movie => {
-          return <Movie title={movie.title} poster={movie.poster} />
+        {movies.map((movie, index) => {
+          return <Movie title={movie.title} poster={movie.poster} key={index}/>
         })}
       </div>
     );
