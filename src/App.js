@@ -9,51 +9,32 @@ class App extends Component {
   // Render : componentWillMount() -> render() -> componentDidMount()
   // Update : componentWillReceiveProps() -> shouldComponentUpdate() -> componentWillUpdate() -> render() - > component
 
-  state = {
-
-  }
+  state = {}
 
   componentDidMount(){
-    setTimeout(() => {
-      this.setState({ // setState를 하지않고 상태를 변경하면 렌더가 실행되지 않는다.
-        movies: [
-          {
-            title: "Matrix",
-            poster: "https://upload.wikimedia.org/wikipedia/en/thumb/0/06/Ultimate_Matrix_Collection_poster.jpg/220px-Ultimate_Matrix_Collection_poster.jpg"
-          },
-          {
-            title: "Full Metal Jacker",
-            poster: "https://images-na.ssl-images-amazon.com/images/I/71qDKzqJZrL._SL1101_.jpg"
-          },
-          {
-            title: "Oldboy",
-            poster: "https://files.list.co.uk/images/2017/10/25/old-boy-image-LST266342.jpg"
-          },
-          {
-            title: "Star Wars",
-            poster: "https://media.contentapi.ea.com/content/dam/eacom/en-us/migrated-images/2016/11/news-article-images-star-wars-goh-splash.jpg.adapt.crop191x100.1200w.jpg"
-          }
-        ]
-        /*
-        movies: [
-          ...this.state.movies, // 이전 영화 리스트를 그대로 두고, 한 개 영화를 추가해라 라는 뜻, 이걸 없애면 전체가 하나로 대체됨.
-          {
-            title: "Trainspotting",
-            poster: "https://media.contentapi.ea.com/content/dam/eacom/en-us/migrated-images/2016/11/news-article-images-star-wars-goh-splash.jpg.adapt.crop191x100.1200w.jpg"
-          }
-          // ,...this.state.movies, // 이렇게 하면 새로운 것이 위에 추가됨.
-        ]
-        */
-      })
-    }, 2000)
+    this._getMovies();
   }
 
   // 언더바로 시작하는 것은 개발자가 따로 정의하는 함수. 리액트는 제공하는 기능이 많으므로.
   _renderMovies = () => {
     const movies = this.state.movies.map((movie, index) => {
-      return <Movie title={movie.title} poster={movie.poster} key={index}/>
+      return <Movie title={movie.title} poster={movie.large_cover_image} key={index}/>
     })
     return movies;
+  }
+
+  _getMovies = async () => {
+    const movies = await this._callApi() // await.. callApi끝나고 결과가 어떤것이든 movies에 넣고, 이게 완료되면 밑을 실행한다.
+    this.setState({
+      movies // 원래는 movies : movies
+    })
+  }
+
+  _callApi = () => {
+    return fetch('https://yts.am/api/v2/list_movies.json?sort_by=rating') // AJAX
+    .then(response => response.json()) // fetch가 끝나면
+    .then(json => json.data.movies) // .then(json => console.log(json))
+    .catch(err => console.log(err))
   }
 
   // 컴포넌트의 상태가 변할때마다 render가 실행된다.
