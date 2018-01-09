@@ -17,8 +17,15 @@ class App extends Component {
 
   // 언더바로 시작하는 것은 개발자가 따로 정의하는 함수. 리액트는 제공하는 기능이 많으므로.
   _renderMovies = () => {
-    const movies = this.state.movies.map((movie, index) => {
-      return <Movie title={movie.title} poster={movie.large_cover_image} key={index}/>
+    const movies = this.state.movies.map(movie => {
+      console.log(movie)
+      return <Movie
+        title={movie.title_english}
+        poster={movie.medium_cover_image}
+        key={movie.id}
+        genres={movie.genres}
+        synopsis={movie.synopsis}
+        />
     })
     return movies;
   }
@@ -41,7 +48,8 @@ class App extends Component {
   render() { // 모든 컴포넌트는 render()를 가짐, 이 컴포넌트가 보여주는게 무엇인가를 의미.
     console.log('did render')
     return ( // prop 임의의 이름으로 지정가능 한듯.
-      <div className="App">
+      const { movies } = this.state;
+      <div className={movies ? "App" : "App--loading"}>
         {this.state.movies ? this._renderMovies() : 'Loading'}
       </div>
     );
