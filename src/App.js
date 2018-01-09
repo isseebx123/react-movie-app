@@ -47,8 +47,8 @@ class App extends Component {
   // 컴포넌트의 상태가 변할때마다 render가 실행된다.
   render() { // 모든 컴포넌트는 render()를 가짐, 이 컴포넌트가 보여주는게 무엇인가를 의미.
     console.log('did render')
+    const { movies } = this.state;
     return ( // prop 임의의 이름으로 지정가능 한듯.
-      const { movies } = this.state;
       <div className={movies ? "App" : "App--loading"}>
         {this.state.movies ? this._renderMovies() : 'Loading'}
       </div>
